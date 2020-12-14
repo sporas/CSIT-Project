@@ -1,4 +1,4 @@
-﻿
+
 
 
 # make sure you adjust this to point to the folder you want to monitor
@@ -12,7 +12,6 @@ $FileSystemWatcher.IncludeSubdirectories = $true
 
 # make sure the watcher emits events
 $FileSystemWatcher.EnableRaisingEvents = $true
-
 
 
 
@@ -50,7 +49,11 @@ $Action =
             Write-Host $text3
             Write-Host $text4
 
+            Start-Sleep -s 15
+
+
             Remove-Item -Path $Fullpath
+            Write-Host $Name "has been removed!"
     
         }
 
@@ -66,7 +69,7 @@ $Action =
             $text1 = "File {0} has been sent to Decrypted folder. Renamed to {1}" -f $Name, $BaseName
             Write-Host $text1
           #  Remove-Item -Path $Fullpath
-            Write-Host $Name "has been removed!" 
+           # Write-Host $Name "has been removed!" 
 
            
 
@@ -103,7 +106,7 @@ $Action =
                 $balloonToolTip.Visible = $true
  
 
-                $balloonToolTip.ShowBalloonTip(10000)
+                $balloonToolTip.ShowBalloonTip(30000)
             } 
 
 
