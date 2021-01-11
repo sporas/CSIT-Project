@@ -26,7 +26,32 @@ namespace Tsinfotech_Intranet.TestEncryption
         public override void ItemUpdating(SPItemEventProperties properties)
         {
             base.ItemUpdating(properties);
+
+            long validFileSize = 20000000; //20MB
+            long currentFileSize;
+
+            currentFileSize = long.Parse(properties.ListItem.File.TotalLength.ToString());
+
+            if (currentFileSize > validFileSize)
+            {
+                string ErrorMessage = "File Size exceeds 20MB limit! Given FileSize: " + properties.ListItem.File.TotalLength.ToString() + " bytes. Item has been deleted.";
+                properties.Status = SPEventReceiverStatus.CancelWithError;
+                properties.ErrorMessage = ErrorMessage;
+                properties.ListItem.Delete();
+
+            }
+            
+
         }
+        /*
+        public override void ItemAdding(SPItemEventProperties properties)
+        {
+            base.ItemAdding(properties);
+            string ErrorMessage = "File Size exceeds 20MB limit! Given FileSize: " + properties.ListItem.File.TotalLength.ToString();
+            properties.Status = SPEventReceiverStatus.CancelWithError;
+            properties.ErrorMessage = ErrorMessage;
+        } 
+        */
 
         /// <summary>
         /// An item was updated.
@@ -140,6 +165,23 @@ namespace Tsinfotech_Intranet.TestEncryption
             {
                 Item["Title"] = "This test hasnt run yet";
                 Item.Update();
+
+                long validFileSize = 20000000; //20MB
+                long currentFileSize;
+
+                currentFileSize = long.Parse(properties.ListItem.File.TotalLength.ToString());
+
+                if (currentFileSize > validFileSize)
+                {
+                    string filesizestring = "File Size exceeds 20MB limit! Given FileSize: " + properties.ListItem.File.TotalLength.ToString();
+                    Item["Title"] = filesizestring;
+                    Item.Update();
+                    //properties.Status = SPEventReceiverStatus.CancelWithError;
+                  //  properties.ErrorMessage = filesizestring;
+                  //  properties.ListItem.Delete();
+
+
+                }
                
             }
         }
