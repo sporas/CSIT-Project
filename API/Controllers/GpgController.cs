@@ -50,6 +50,8 @@ namespace TodoApi.Controllers
         [DisableRequestSizeLimit] //Disables the size limit of the request body. Default is 30MB
         public IActionResult Create([FromBody] GpgItem item)
         {
+
+   
             //Creates new logger using Serilog
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -173,6 +175,10 @@ namespace TodoApi.Controllers
             if (pgpstatus == true)
             {
                 Log.Information("File has been encrypted with public key");
+            }
+            else if (pgpstatus == false)
+            {
+                Log.Error("PGP ERROR");
             }
             
             
