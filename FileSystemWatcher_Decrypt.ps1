@@ -18,8 +18,8 @@ $FileSystemWatcher.EnableRaisingEvents = $true
 # define the code that should execute when a file change is detected
 $Action = 
 {
-
-    $LogFile = "C:\Powerlogs\testing.txt"
+    $Date = Get-Date -format "dd-MM-yyyy"
+    $LogFile = "C:\Powerlogs\FSW_d_" + $Date +".txt"
     Function LogWrite
     {
         Param ([string]$logstring)
@@ -49,8 +49,10 @@ $Action =
     {
         'Changed' 
         {
+            $Time = Get-Date
             LogWrite ""
-            LogWrite "Changed Event Raised"
+            $text10 = "Changed Event Raised: " + $Time
+            LogWrite $text10
 
             if ($BaseName.StartsWith("restricted_"))
             {
@@ -94,7 +96,9 @@ $Action =
 
             $outputpath = $outputpathwithoutfolder + $namewithoutanything
 
-            gpg --pinentry-mode loopback --yes --output $outputpath --decrypt $FullPath 2> C:\Powerlogs\gpgbugs.txt
+            gpg --pinentry-mode loopback --yes --output $outputpath --decrypt $FullPath 2>> C:\Powerlogs\gpgbugs.txt
+            gpg --list-packets --show-session-key $FullPath 2>> C:\Powerlogs\gpgpackets.txt
+ 
             
             $text3 = "INPUT: {0}" -f $FullPath
             $text4 = "OUTPUT: {0}" -f $outputpath
@@ -121,8 +125,10 @@ $Action =
 
         'Created' 
         { 
+            $Time = Get-Date
             LogWrite ""
-            LogWrite "Created Event Raised"
+            $text20 = "Created Event Raised: " + $Time
+            LogWrite $text20
 
        
          #  gpg --pinentry-mode loopback --yes --output $outputpath --decrypt $FullPath
@@ -130,14 +136,13 @@ $Action =
         
            # gpg --pinentry-mode=loopback --decrypt $FullPath --output $outputpath
 
-
            
             $text = "File {0} was decrypted with GPG" -f $Name
             Write-Host $text -ForegroundColor Yellow
-            LogWrite $text
+          #  LogWrite $text
             $text1 = "File {0} has been sent to Decrypted folder. Renamed to {1}" -f $Name, $BaseName
             Write-Host $text1
-            LogWrite $text1
+           # LogWrite $text1
 
 
 
