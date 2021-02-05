@@ -126,7 +126,7 @@ namespace Tsinfotech_Intranet.TestEncryption
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create("http://encryptionpc:5002/api/gpg");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
-                httpWebRequest.Headers["ApiKey"] = "MySecretKey";
+                httpWebRequest.Headers["ApiKey"] = "fn4#H5E{";
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
