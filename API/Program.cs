@@ -21,6 +21,9 @@ namespace TodoApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).ConfigureWebHost(config =>
+                {
+                    config.UseUrls("http://encryptionpc:5002");
+                }).UseWindowsService();
     }
 }
